@@ -3,6 +3,8 @@ JSON-Dump
 
 NSJSONSerialization category to dump JSON objects as they are parsed, useful for testing.
 
+Demo app included.
+
 ##How to use:##
 
 1. Import the file in "Class Categories" into your project.
