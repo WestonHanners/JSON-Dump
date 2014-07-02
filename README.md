@@ -14,3 +14,7 @@ Demo app included.
 Now anytime you parse JSON, it will be written to disk in your apps "documents" directory in a sub folder called "JSON DUMP"
 
 These can be useful for stubing out network calls for unit tests, or just general debugging.
+
+To dump json in NSString format (suitable for using directly in objective-c files) add the code below to your pch file.
+
+`#define JSONDUMPNSSTRING=1`
