@@ -72,7 +72,14 @@
 
     NSURL *baseURL = [NSJSONSerialization folderForJSON];
     NSURL *fileName = [baseURL URLByAppendingPathComponent:identifier];
-    NSURL *fileNameWithExtension = [fileName URLByAppendingPathExtension:@"json"];
+    
+#ifdef JSONDUMPNSSTRING
+    NSString *extension = @"txt";
+#else 
+    NSString *extension = @"json";
+#endif
+    
+    NSURL *fileNameWithExtension = [fileName URLByAppendingPathExtension:extension];
     
     return fileNameWithExtension;
 }
@@ -86,7 +93,19 @@
         
         NSString *identifier = [formatter stringFromDate:[NSDate date]];
         
-        [data writeToURL:[NSJSONSerialization saveURLWithID:identifier] atomically:YES];
+        NSMutableString *jsonString = [[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+#ifdef JSONDUMPNSSTRING
+        
+        NSRange range = NSMakeRange(0, [jsonString length]);
+
+        [jsonString replaceOccurrencesOfString:@"\"" withString:@"\\\""  options:0 range:range];
+        [jsonString insertString:@"NSString *jsonString = @\"" atIndex:0];
+        [jsonString appendString:@"\""];
+        
+#endif
+        
+        [jsonString writeToURL:[NSJSONSerialization saveURLWithID:identifier] atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }];
     
     id retval = [self hs_JSONObjectWithData:data options:opt error:error];
