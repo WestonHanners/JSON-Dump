@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Hanners Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSJSONSerialization (Dump)
 
